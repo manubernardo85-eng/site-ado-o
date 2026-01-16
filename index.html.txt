@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Site de Adoção 💖</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: linear-gradient(135deg, #ffd6e8, #e0f7ff);
+      text-align: center;
+      padding: 30px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 20px;
+      padding: 25px;
+      max-width: 420px;
+      margin: auto;
+      box-shadow: 0 10px 25px rgba(0,0,0,.15);
+    }
+
+    img {
+      width: 100%;
+      border-radius: 15px;
+    }
+
+    h1 { color: #ff5fa2; }
+
+    button {
+      border: none;
+      padding: 12px 18px;
+      margin: 10px;
+      border-radius: 30px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .yes { background: #4caf50; color: white; }
+    .no  { background: #f44336; color: white; }
+
+    button:hover { transform: scale(1.05); }
+
+    canvas {
+      margin-top: 25px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h1>🐾 Adoção com Amor</h1>
+    <p>Você adotaria esse fofinho?</p>
+
+    <!-- troque a imagem se quiser -->
+    <img src="https://place-puppy.com/400x280" alt="Pet para adoção">
+
+    <div>
+      <button class="yes" onclick="votar('sim')">💖 Adotar</button>
+      <button class="no" onclick="votar('nao')">💔 Não adotar</button>
+    </div>
+
+    <canvas id="grafico"></canvas>
+  </div>
+
+<script>
+  let votosSim = 0;
+  let votosNao = 0;
+
+  const ctx = document.getElementById("grafico");
+
+  const chart = new Chart(ctx, {
+    type: "pie",
+    data: {
+      labels: ["Adotar", "Não adotar"],
+      datasets: [{
+        data: [votosSim, votosNao]
+      }]
+    },
+    options: {
+      plugins: {
+        legend: { position: "bottom" }
+      }
+    }
+  });
+
+  function votar(tipo) {
+    if (tipo === "sim") votosSim++;
+    if (tipo === "nao") votosNao++;
+
+    chart.data.datasets[0].data = [votosSim, votosNao];
+    chart.update();
+  }
+</script>
+
+</body>
+</html>
